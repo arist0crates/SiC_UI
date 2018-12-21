@@ -1,0 +1,114 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100% !important;
+    background-color: #E89211;
+}
+img{
+    display:block;
+    margin-right:10px;
+    background:transparent;
+    width: 100px;
+}
+label{
+    color:white;
+    font-size:15px;
+}
+.label-1{
+    color:white;
+    margin-left:100px;
+}
+input{
+    margin-left:10px;
+    border-radius: 25px;
+    border: 0px ;
+    margin-right:10px;
+    width: 100px;
+    height: 20px;  
+    outline:none;
+}
+.form-group{
+    float:left;
+}
+#email{
+    margin-left:51px;
+    
+    
+}
+form{
+    width:50%;
+}
+#bu{
+    margin:0 auto;
+   
+}
+.login{
+    border-radius: 25px;
+    width :350px;
+    height:20px;
+    margin-right:5px;
+    font-size: 15px;
+    background-color:#BF780D;
+    
+}.login:hover{
+    background-color: #82530B;
+}
+
+button:hover {
+    background-color: #BF780D;
+    outline:none;}
+button{
+    color: white;
+    background-color:#E89211;
+    list-style: none;
+    font-size: 20px;
+    width: 50%;
+    height: 100%;
+    border:none;
+    
+    outline:none;
+}
+.container {
+    display: block;
+    position: relative;
+    text-align: center;
+    color: white;
+    width:100% !important;
+
+  }
+.container>img{
+    width:2050px;
+    height:500px;
+    overflow-x:hidden;
+    margin-left:-100px;
+    
+}
+
+  /* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size:100px;
+  }
+.selected{
+    background-color:#BF780D;
+}
+.a{ 
+    background-color:#E89211;
+    width:950px;
+    height:400px;
+    float:left;
+    margin-left:-50px;
+}
+.b{
+    width:950px;
+    float:right;
+    height:400px;
+}
+

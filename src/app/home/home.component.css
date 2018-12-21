@@ -1,0 +1,107 @@
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+.menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    width: 100% !important;
+    background-color: #E89211;
+}
+img{
+    display:block;
+    margin-right:10px;
+    background:transparent;
+    width: 100px;
+}
+.label{
+    color:black;
+
+}
+.label-1{
+    color:black;
+    
+}
+input{
+    margin-left:10px;
+    margin-top:10px;
+    border-radius: 25px;
+    border: 0px ;
+    margin-right:10px;
+    width: 100px;
+    height: 20px;  
+    outline:none;
+    background-color:white;
+    
+}
+form{
+    margin:0 auto;
+}
+.login{
+    margin-top:10px;
+    border-radius: 25px;
+    width :100px;
+    height:20px;
+    margin-right:5px;
+    font-size: 15px;
+    background-color:#BF780D;
+    
+}.login:hover{
+    background-color: #82530B;
+}
+
+button:hover {
+    background-color: #BF780D;
+    outline:none;}
+button{
+    color: white;
+    background-color:#E89211;
+    list-style: none;
+    font-size: 20px;
+    width: 50%;
+    height: 100%;
+    border:none;
+    
+    outline:none;
+}
+.container {
+    display: block;
+    position: relative;
+    text-align: center;
+    color: white;
+    width:100% !important;
+
+  }
+.container>img{
+    width:2050px;
+    height:500px;
+    overflow-x:hidden;
+    margin-left:-100px;
+    
+}
+
+  /* Centered text */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size:100px;
+  }
+.selected{
+    background-color:#BF780D;
+}
+.c{
+   
+    text-align:center;
+    background-color:#E89211;
+    width:500px;
+    margin:0 auto;
+    margin-top:100px;
+    height:500px;
+    border-radius: 25px;
+}
+#abcd{
+
+}
+
