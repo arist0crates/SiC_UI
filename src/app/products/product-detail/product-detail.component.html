@@ -1,0 +1,48 @@
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{ product.name }}</h1>
+    <h5>Contained Products:</h5>
+    <tr *ngFor="let products of product.products">
+      <td>{{products.name}}</td>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h5>Possible Material Finishes:</h5>
+    <h6></h6>
+    <tr *ngFor="let materialfinishes of product.possibleMaterialFinishes">
+      <td>{{materialfinishes.material.name}}</td>
+      <td> : </td>
+      <td>{{materialfinishes.name}}</td>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h5>Product Dimensions:</h5>
+    <h6>minHeight: {{ product.dimensions.minHeight }} meters</h6>
+    <h6>maxHeight: {{ product.dimensions.maxHeight }} meters</h6>
+    <h6>minDepth: {{ product.dimensions.minDepth }} meters</h6>
+    <h6>maxDepth: {{ product.dimensions.maxDepth }} meters</h6>
+    <h6>minWidth: {{ product.dimensions.minWidth }} meters</h6>
+    <h6>maxWidth: {{ product.dimensions.maxWidth }} meters</h6>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h5>Product Category:</h5>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="btn-group" appDropdown>
+      <button type="button" class="btn btn-primary dropdown-toggle">
+        Manage Product <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
+        <li><a style="cursor: pointer;" (click)="onEditRecipe()">Edit Product</a></li>
+        <li><a style="cursor: pointer;" (click)="onDeleteRecipe()">Delete Product</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
