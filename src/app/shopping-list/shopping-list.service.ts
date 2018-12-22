@@ -1,39 +1,39 @@
-import { Ingredient } from '../shared/ingredient.model';
 import { Subject } from 'rxjs/Subject';
+import { Product } from '../products/product.model';
 
 export class ShoppingListService {
-  ingredientsChanged = new Subject<Ingredient[]>();
+  productsChanged = new Subject<Product[]>();
   startedEditing = new Subject<number>();
-  private ingredients: Ingredient[] = [];
+  private products: Product[] = [];
 
-  getIngredients() {
-    return this.ingredients.slice();
+  getProducts() {
+    return this.products.slice();
   }
 
-  getIngredient(index: number) {
-    return this.ingredients[index];
+  getProduct(index: number) {
+    return this.products[index];
   }
 
-  addIngredient(ingredient: Ingredient) {
-    this.ingredients.push(ingredient);
-    this.ingredientsChanged.next(this.ingredients.slice());
+  addProduct(product: Product) {
+    this.products.push(product);
+    this.productsChanged.next(this.products.slice());
   }
 
-  addIngredients(ingredients: Ingredient[]) {
-    // for (let ingredient of ingredients) {
-    //   this.addIngredient(ingredient);
-    // }
-    this.ingredients.push(...ingredients);
-    this.ingredientsChanged.next(this.ingredients.slice());
+  addProducts(products: Product[]) {
+    for (let product of products) {
+      this.addProduct(product);
+    }
+    this.products.push(...products);
+    this.productsChanged.next(this.products.slice());
   }
 
-  updateIngredient(index: number, newIngredient: Ingredient) {
-    this.ingredients[index] = newIngredient;
-    this.ingredientsChanged.next(this.ingredients.slice());
+  updateProduct(index: number, newProduct: Product) {
+    this.products[index] = newProduct;
+    this.productsChanged.next(this.products.slice());
   }
 
-  deleteIngredient(index: number) {
-    this.ingredients.splice(index, 1);
-    this.ingredientsChanged.next(this.ingredients.slice());
+  deleteProduct(index: number) {
+    this.products.splice(index, 1);
+    this.productsChanged.next(this.products.slice());
   }
 }

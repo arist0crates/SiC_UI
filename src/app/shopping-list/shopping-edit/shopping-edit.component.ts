@@ -7,8 +7,8 @@ import {
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs/Subscription';
 
-import { Ingredient } from '../../shared/ingredient.model';
 import { ShoppingListService } from '../shopping-list.service';
+import { Product } from 'src/app/products/product.model';
 
 @Component({
   selector: 'app-shopping-edit',
@@ -20,7 +20,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   subscription: Subscription;
   editMode = false;
   editedItemIndex: number;
-  editedItem: Ingredient;
+  editedItem: Product;
 
   constructor(private slService: ShoppingListService) { }
 
@@ -30,10 +30,9 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
         (index: number) => {
           this.editedItemIndex = index;
           this.editMode = true;
-          this.editedItem = this.slService.getIngredient(index);
+          this.editedItem = this.slService.getProduct(index);
           this.slForm.setValue({
             name: this.editedItem.name,
-            amount: this.editedItem.amount
           })
         }
       );
@@ -41,11 +40,11 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     const value = form.value;
-    const newIngredient = new Ingredient(value.name, value.amount);
+    const newProduct = new Product(value.name, value.productId, value.possibleMaterialFinishes, value.products, value.dimensions, value.category);
     if (this.editMode) {
-      this.slService.updateIngredient(this.editedItemIndex, newIngredient);
+      this.slService.updateProduct(this.editedItemIndex, newProduct);
     } else {
-      this.slService.addIngredient(newIngredient);
+      this.slService.addProduct(newProduct);
     }
     this.editMode = false;
     form.reset();
@@ -57,7 +56,7 @@ export class ShoppingEditComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
-    this.slService.deleteIngredient(this.editedItemIndex);
+    this.slService.deleteProduct(this.editedItemIndex);
     this.onClear();
   }
 

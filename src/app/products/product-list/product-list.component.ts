@@ -15,27 +15,37 @@ export class ProductListComponent implements OnInit, OnDestroy {
   subscription: Subscription;
 
   constructor(private productService: ProductService,
-              private router: Router,
-              private route: ActivatedRoute) {
+    private router: Router,
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
-    this.productService.getProducts()
-    .then((products)=>{
-      this.products = products;
-      console.log(this.products);
-    })
-    /*this.subscription = this.productService.recipesChanged
+    this.route.params
+      .subscribe(() => {
+        this.productService.getProducts()
+          .then((products) => {
+            this.products = products;
+            console.log(this.products);
+          })
+      })
+
+
+    this.subscription = this.productService.productsChanged
       .subscribe(
-        (recipes: Recipe[]) => {
-          this.recipes = recipes;
+        (products: Product[]) => {
+          this.products = products;
         }
       );
-    this.recipes = this.recipeService.getRecipes();*/
+
+    this.productService.getProducts()
+      .then((products) => {
+        this.products = products;
+        console.log("lalalalal" + this.products);
+      });
   }
 
   onNewRecipe() {
-    this.router.navigate(['new'], {relativeTo: this.route});
+    this.router.navigate(['new'], { relativeTo: this.route });
   }
 
   ngOnDestroy() {
