@@ -7,16 +7,16 @@ import { asTextData } from '@angular/core/src/view';
 
 @Injectable()
 export class ProductService {
-  //recipesChanged = new Subject<Recipe[]>();
+  productsChanged = new Subject<Product[]>();
 
   private products: Product[] = [];
 
-  constructor(/*private slService: ShoppingListService,*/ public http: HttpClient) {}
+  constructor(private slService: ShoppingListService, public http: HttpClient) {}
 
-  /*setRecipes(recipes: Recipe[]) {
-    this.recipes = recipes;
-    this.recipesChanged.next(this.recipes.slice());
-  }*/
+  setRecipes(products: Product[]) {
+    this.products = products;
+    this.productsChanged.next(this.products.slice());
+  }
 
   getProducts() {
 
@@ -37,22 +37,22 @@ export class ProductService {
       .then(data => {return data; });
   }
 
-  /*addProductToShoppingList(product: Product) {
+  addProductToShoppingList(product: Product) {
     this.slService.addProduct(product);
-  }*/
+  }
 
-  /*addRecipe(recipe: Recipe) {
-    this.recipes.push(recipe);
-    this.recipesChanged.next(this.recipes.slice());
-  }*/
+  addProduct(product: Product) {
+    this.products.push(product);
+    this.productsChanged.next(this.products.slice());
+  }
 
-  /*updateRecipe(index: number, newRecipe: Recipe) {
-    this.recipes[index] = newRecipe;
-    this.recipesChanged.next(this.recipes.slice());
-  }*/
+  updateProduct(index: number, newProduct: Product) {
+    this.products[index] = newProduct;
+    this.productsChanged.next(this.products.slice());
+  }
 
-  /*deleteRecipe(index: number) {
-    this.recipes.splice(index, 1);
-    this.recipesChanged.next(this.recipes.slice());
-  }*/
+  deleteProduct(index: number) {
+    this.products.splice(index, 1);
+    this.productsChanged.next(this.products.slice());
+  }
 }

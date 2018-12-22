@@ -5,6 +5,7 @@ import { Product } from '../product.model';
 import { ProductService } from '../product.service';
 import { HttpParams } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product-detail',
@@ -41,18 +42,19 @@ export class ProductDetailComponent implements OnInit {
 
   }
 
-  /*onAddToShoppingList() {
-    this.recipeService.addIngredientsToShoppingList(this.recipe.ingredients);
+  onAddToShoppingList() {
+    this.productService.addProductToShoppingList(this.product);
   }
 
-  onEditRecipe() {
+  onEditProduct() {
     this.router.navigate(['edit'], {relativeTo: this.route});
-    // this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
+    this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
   }
 
-  onDeleteRecipe() {
-    this.recipeService.deleteRecipe(this.id);
-    this.router.navigate(['/recipes']);
-  }*/
+  onDeleteProduct() {
+    this.productService.deleteProduct(this.id);
+    this.router.navigate(['/products']);
+  }
+
 
 }
