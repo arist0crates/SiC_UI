@@ -1,48 +1,63 @@
 import * as THREE from 'three';
+import * as OrbitControls from 'orbit-controls-es6';
 import { Injectable } from '@angular/core';
+import { Renderer } from './scene/Renderer';
+import { Camera } from './scene/Camera';
+import { Scene } from './scene/Scene';
+import { Lights } from './scene/Lights';
+import { Ground } from './scene/Ground';
+import { Audio } from './scene/Audio';
+import { Closet } from './model/Closet';
+import { GUI } from './ui/GUI';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EngineService {
-  private canvas: HTMLCanvasElement;
-  private renderer: THREE.WebGLRenderer;
-  private camera: THREE.PerspectiveCamera;
-  private scene: THREE.Scene;
-  private light: THREE.AmbientLight;
+  public canvas: HTMLCanvasElement;
+  public renderer: THREE.WebGLRenderer;
+  public camera: THREE.PerspectiveCamera;
+  public cameraControls: OrbitControls;
+  public scene: THREE.Scene;
+  public ambientLight: THREE.AmbientLight;
+  public light: THREE.DirectionalLight;
+  public ground: THREE.Mesh;
+  public music: THREE.Audio;
+  private musicURL = '../../assets/sound/valkyries-rock.mp3';
 
-  private cube: THREE.Mesh;
+  private closet : Closet;
+  
+  public GUI : GUI;
 
   createScene(elementId: string): void {
     // The first step is to get the reference of the canvas element from our HTML document
     this.canvas = <HTMLCanvasElement>document.getElementById(elementId);
 
-    this.renderer = new THREE.WebGLRenderer({
-      canvas: this.canvas,
-      alpha: true,    // transparent background
-      antialias: true // smooth edges
-    });
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer = Renderer.createRenderer(this.canvas);
 
+    //--------Camera. Inclui "cameraControls", mas não são obrigatorios
+    this.camera = Camera.createCamera();
     // create the scene
-    this.scene = new THREE.Scene();
-
-    this.camera = new THREE.PerspectiveCamera(
-      75, window.innerWidth / window.innerHeight, 0.1, 1000
-    );
-    this.camera.position.z = 5;
+    this.scene = Scene.createScene();
     this.scene.add(this.camera);
 
-    // soft white light
-    this.light = new THREE.AmbientLight( 0x404040 );
-    this.light.position.z = 10;
-    this.scene.add(this.light);
+    this.cameraControls = Camera.createCameraControls(this.camera,
+      this.renderer, this.render);
 
-    let geometry = new THREE.BoxGeometry(1, 1, 1);
-    let material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
-    this.cube = new THREE.Mesh( geometry, material );
-    this.scene.add(this.cube);
+    this.ambientLight = Lights.createAmbientLight();
+    this.scene.add( this.ambientLight );
+    this.light = Lights.createDirectionalLight();
+    this.scene.add( this.light );
 
+    this.ground = Ground.createGround('../../assets/textures/grasslight-big.jpg');
+    this.scene.add( this.ground );
+    
+    this.music = Audio.createAudio(this.musicURL, this.camera);
+
+    this.closet = new Closet(null, null, null, null, null, null);
+    this.scene.add(this.closet.content);
+
+    this.GUI = new GUI(this, this.closet);
   }
 
   animate(): void {
@@ -60,8 +75,6 @@ export class EngineService {
       this.render();
     });
 
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
   }
 
