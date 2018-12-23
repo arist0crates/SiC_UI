@@ -22,10 +22,12 @@
     "@angular/router": "^6.0.0",
     "bootstrap": "3.3.7",
     "core-js": "^2.5.4",
+    "dat.gui": "^0.7.3",
     "firebase": "4.12.1",
     "rxjs": "^6.0.0",
     "rxjs-compat": "^6.1.0",
     "three": "^0.99.0",
+    "three-gltf-loader": "^1.99.1",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
@@ -48,6 +50,6 @@
     "protractor": "^5.4.1",
     "ts-node": "~5.0.1",
     "tslint": "~5.9.1",
-    "typescript": "^2.7.2"
+    "typescript": "^2.8.1"
   }
 }
