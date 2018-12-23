@@ -3,7 +3,6 @@ import { Subject } from 'rxjs/Subject';
 import { HttpClient } from '@angular/common/http';
 import { Product } from './product.model';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { asTextData } from '@angular/core/src/view';
 
 @Injectable()
 export class ProductService {
