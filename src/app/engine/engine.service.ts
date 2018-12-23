@@ -23,7 +23,7 @@ export class EngineService {
   public light: THREE.DirectionalLight;
   public ground: THREE.Mesh;
   public music: THREE.Audio;
-  private musicURL = '../../assets/sound/valkyries.mp3';
+  private musicURL = '../../assets/sound/valkyries-rock.mp3';
 
   private closet : Closet;
   
@@ -58,11 +58,9 @@ export class EngineService {
     this.scene.add(this.closet.content);
 
     this.GUI = new GUI(this, this.closet);
-
-    window.addEventListener('resize', this.onWindowResize, false);
   }
 
-  /*animate(): void {
+  animate(): void {
     window.addEventListener('DOMContentLoaded', () => {
       this.render();
     });
@@ -70,19 +68,17 @@ export class EngineService {
     window.addEventListener('resize', () => {
       this.resize();
     });
-  }*/
+  }
 
-  /*render() {
+  render() {
     requestAnimationFrame(() => {
       this.render();
     });
 
-    this.cube.rotation.x += 0.01;
-    this.cube.rotation.y += 0.01;
     this.renderer.render(this.scene, this.camera);
-  }*/
+  }
 
-  /*resize() {
+  resize() {
     let width = window.innerWidth;
     let height = window.innerHeight;
 
@@ -90,20 +86,5 @@ export class EngineService {
     this.camera.updateProjectionMatrix();
 
     this.renderer.setSize( width, height );
-  }*/
-
-  animate() {
-    requestAnimationFrame(this.animate);
-    this.renderer.render(this.scene, this.camera);
-  }
-  
-  onWindowResize() {
-    this.camera.aspect = window.innerWidth / window.innerHeight;
-    this.camera.updateProjectionMatrix();
-    this.renderer.setSize(window.innerWidth, window.innerHeight);
-  }
-  
-  render() {
-    this.renderer.render(this.scene, this.camera);
   }
 }

@@ -10,7 +10,7 @@ export function Closet(height, width, depth, inputColor, position, Children){
     // closet
     var closet = new THREE.Group();
     var loader = new THREE.TextureLoader();
-    var woodTexture = loader.load( './textures/madeira.jpeg' );
+    var woodTexture = loader.load( '../../../assets/textures/madeira.jpeg' );
     woodTexture.wrapS = THREE.RepeatWrapping;
     woodTexture.repeat.set( 3, 1 );
     woodTexture.anisotropy = 16;
