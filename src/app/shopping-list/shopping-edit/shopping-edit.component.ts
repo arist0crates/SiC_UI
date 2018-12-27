@@ -9,10 +9,8 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { ShoppingListService } from '../shopping-list.service';
 import { Product } from 'src/app/products/product.model';
-import { ValueTransformer } from '@angular/compiler/src/util';
 import { ProductService } from 'src/app/products/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { ProductsComponent } from 'src/app/products/products.component';
 
 @Component({
   selector: 'app-shopping-edit',
