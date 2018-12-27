@@ -43,11 +43,32 @@
               <th> X </th>
             </tr>
             <tr *ngFor="let product of editedItem.products; let i = index">
-              <td>{{product.productId}}</td>
+              <td>{{i+1}}</td>
               <td>{{product.name}}</td>
               <td>
                 <div class="col-xs-1">
                   <button type="button" class="btn btn-danger" (click)="onDeleteSubProduct(i)">x</button>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-5 form-group">
+          <label>Add Products</label>
+          <table class="table">
+            <tr>
+              <th>#</th>
+              <th>Product</th>
+              <th> V </th>
+            </tr>
+            <tr *ngFor="let product of products; let i = index">
+              <td>{{i+1}}</td>
+              <td>{{product.name}}</td>
+              <td>
+                <div class="col-xs-1">
+                  <button type="button" class="btn btn-success" (click)="onAddSubProduct(i)">v</button>
                 </div>
               </td>
             </tr>
