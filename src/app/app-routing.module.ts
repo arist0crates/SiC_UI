@@ -7,11 +7,12 @@ import { EngineComponent } from './engine/engine.component';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderComponent } from './orders/order/order.component';
+import { AuthGuard } from './auth/auth-guard.service';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'products', loadChildren: './products/products.module#ProductsModule'},
-  { path: 'shopping-list', component: ShoppingListComponent },
+  { path: 'shopping-list', component: ShoppingListComponent, canActivate: [AuthGuard] },
   { path: 'engine', component: EngineComponent },
   { path: 'order', component: OrderComponent }
 ];
@@ -22,7 +23,10 @@ const appRoutes: Routes = [
     ToastrModule.forRoot(),
     BrowserAnimationsModule
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
+  providers: [
+    AuthGuard
+  ]
 })
 export class AppRoutingModule {
 
