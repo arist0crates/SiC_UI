@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
 })
 export class ProductDetailComponent implements OnInit {
   product: Product;
+  subproducts: Product[];
   id: number;
 
   constructor(private productService: ProductService,
@@ -36,6 +37,8 @@ export class ProductDetailComponent implements OnInit {
           this.productService.getProduct(this.id)
             .then((product) => {
               this.product = product;
+              this.subproducts = product.products;
+              console.log(this.subproducts);
               console.log(this.product);
             });
         })

@@ -5,6 +5,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { ProductService } from '../product.service';
 import { Product } from '../product.model';
 import { MaterialFinish } from 'src/app/materialfinishes/materialfinish.model';
+import { Category } from 'src/app/categories/category.model';
 
 @Component({
   selector: 'app-product-edit',
@@ -23,14 +24,14 @@ export class ProductEditComponent implements OnInit {
   }
 
   ngOnInit() {
-    /*this.route.params
+    this.route.params
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
           this.editMode = params['id'] != null;
           this.initForm();
         }
-      );*/
+      );
   }
 
   onSubmit() {
@@ -48,22 +49,19 @@ export class ProductEditComponent implements OnInit {
     }
     this.onCancel();
   }
-  /*
-    onAddSubProduct() {
-      (<FormArray>this.recipeForm.get('ingredients')).push(
-        new FormGroup({
-          'name': new FormControl(null, Validators.required),
-          'amount': new FormControl(null, [
-            Validators.required,
-            Validators.pattern(/^[1-9]+[0-9]*$/)
-          ])
-        })
-      );
-    }
-  
-    onDeleteSubProduct(index: number) {
-      (<FormArray>this.recipeForm.get('ingredients')).removeAt(index);
-    }*/
+
+  onAddProduct() {
+    (<FormArray>this.productForm.get('products')).push(
+      new FormGroup({
+        'name': new FormControl(null, Validators.required)
+
+      })
+    );
+  }
+
+  onDeleteProduct(index: number) {
+    (<FormArray>this.productForm.get('products')).removeAt(index);
+  }
 
   onCancel() {
     this.router.navigate(['../'], { relativeTo: this.route });
@@ -75,17 +73,17 @@ export class ProductEditComponent implements OnInit {
   }
 
   private initForm() {
-    let productId = null;
-    let productName = '';
-    let productProducts = null;
-    let productPossibleMaterialFinishes = null;
-    let productDimensionminHeight = null;
-    let productDimensionmaxHeight = null;
-    let productDimensionminDepth = null;
-    let productDimensionmaxDepth = null;
-    let productDimensionminWidth = null;
-    let productDimensionmaxWidth = null;
-    let productCategory= null;
+    let productId: number;
+    let productName: string;
+    let productProducts: Product[];
+    let productPossibleMaterialFinishes: MaterialFinish[];
+    let productDimensionminHeight: number;
+    let productDimensionmaxHeight: number;
+    let productDimensionminDepth: number;
+    let productDimensionmaxDepth: number;
+    let productDimensionminWidth: number;
+    let productDimensionmaxWidth: number;
+    let productCategory: Category;
 
     if (this.editMode) {
       this.productService.getProduct(this.id)
@@ -105,23 +103,13 @@ export class ProductEditComponent implements OnInit {
 
       if (this.product['products']) {
         for (let product of this.product.products) {
-          productProducts.push(
-            new FormGroup({
-              'name': new FormControl(product.name, Validators.required),
-              'id': new FormControl(product.productId, Validators.required)
-            })
-          );
+          productProducts.push(product);
         }
       }
 
       if (this.product['possibleMaterialFinishes']) {
         for (let materialFinish of this.product.possibleMaterialFinishes) {
-          productPossibleMaterialFinishes.push(
-            new FormGroup({
-              'name': new FormControl(materialFinish.name, Validators.required),
-              'material': new FormControl(materialFinish.material, Validators.required)
-            })
-          );
+          productPossibleMaterialFinishes.push(materialFinish);
         }
       }
     }

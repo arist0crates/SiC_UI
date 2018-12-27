@@ -1,46 +1,82 @@
 <div class="row">
   <div class="col-xs-12">
     <h1>{{ product.name }}</h1>
-    <h5>Contained Products:</h5>
-    <tr *ngFor="let products of product.products">
-      <td>{{products.name}}</td>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <h5>Possible Material Finishes:</h5>
-    <h6></h6>
-    <tr *ngFor="let materialfinishes of product.possibleMaterialFinishes">
-      <td>{{materialfinishes.material.name}}</td>
-      <td> : </td>
-      <td>{{materialfinishes.name}}</td>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h5>Product Dimensions:</h5>
-    <h6>minHeight: {{ product.dimensions.minHeight }} meters</h6>
-    <h6>maxHeight: {{ product.dimensions.maxHeight }} meters</h6>
-    <h6>minDepth: {{ product.dimensions.minDepth }} meters</h6>
-    <h6>maxDepth: {{ product.dimensions.maxDepth }} meters</h6>
-    <h6>minWidth: {{ product.dimensions.minWidth }} meters</h6>
-    <h6>maxWidth: {{ product.dimensions.maxWidth }} meters</h6>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <h5>Product Category:</h5>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="btn-group" appDropdown>
-      <button type="button" class="btn btn-primary dropdown-toggle">
-        Manage Product <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu">
-        <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
-      </ul>
+    <div class="row">
+      <div class="col-sm-5 form-group">
+        <label for="product">Possible Material Finishes</label>
+        <table class="table">
+          <tr>
+            <th>#</th>
+            <th>Material</th>
+            <th>Finish</th>
+          </tr>
+          <tr *ngFor="let materialfinish of product.possibleMaterialFinishes; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{materialfinish.material.name}}</td>
+            <td>{{materialfinish.name}}</td>
+          </tr>
+        </table>
+      </div>
     </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-sm-5 form-group">
+        <label for="product">Product Dimensions</label>
+        <table class="table">
+          <tr>
+            <th>Minimal Height</th>
+            <th>Maximal Height</th>
+            <th>Minimal Depth</th>
+            <th>Maximal Depth</th>
+            <th>Minimal Width</th>
+            <th>Maximal Width</th>
+          </tr>
+          <tr>
+            <td>{{ product.dimensions.minHeight }}</td>
+            <td>{{ product.dimensions.maxHeight }}</td>
+            <td>{{ product.dimensions.minDepth }}</td>
+            <td>{{ product.dimensions.maxDepth }}</td>
+            <td>{{ product.dimensions.minWidth }}</td>
+            <td>{{ product.dimensions.maxWidth }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="row">
+          <div class="col-sm-5 form-group">
+            <label for="product">Contained Products</label>
+            <table class="table">
+              <tr>
+                <th>#</th>
+                <th>Product</th>
+              </tr>
+              <tr *ngFor="let subproduct of subproducts; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{ subproduct.name }}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="btn-group" appDropdown>
+          <button type="button" class="btn btn-primary dropdown-toggle">
+            Manage Product <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu">
+            <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>

@@ -44,7 +44,7 @@ export class ProductListComponent implements OnInit, OnDestroy {
       });
   }
 
-  onNewRecipe() {
+  onNewProduct() {
     this.router.navigate(['new'], { relativeTo: this.route });
   }
 

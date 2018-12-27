@@ -12,7 +12,7 @@ export class ProductService {
 
   constructor(private slService: ShoppingListService, public http: HttpClient) {}
 
-  setRecipes(products: Product[]) {
+  setProducts(products: Product[]) {
     this.products = products;
     this.productsChanged.next(this.products.slice());
   }

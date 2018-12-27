@@ -8,12 +8,14 @@ import { ProductStartComponent } from './product-start/product-start.component';
 import { ProductsComponent } from './products.component';
 
 const productsRoutes: Routes = [
-  { path: '', component: ProductsComponent, children: [
-    // { path: '', component: ProductStartComponent },
-    { path: 'new', component: ProductEditComponent, canActivate: [AuthGuard] },
-    { path: ':id', component: ProductDetailComponent },
-    { path: ':id/edit', component: ProductEditComponent, canActivate: [AuthGuard] },
-  ] },
+  {
+    path: '', component: ProductsComponent, children: [
+      //{ path: '', component: ProductStartComponent },
+      { path: 'new', component: ProductEditComponent, canActivate: [AuthGuard] },
+      { path: ':id', component: ProductDetailComponent },
+      { path: ':id/edit', component: ProductEditComponent, canActivate: [AuthGuard] },
+    ]
+  },
 ];
 
 @NgModule({
@@ -25,4 +27,4 @@ const productsRoutes: Routes = [
     AuthGuard
   ]
 })
-export class ProductsRoutingModule {}
+export class ProductsRoutingModule { }
