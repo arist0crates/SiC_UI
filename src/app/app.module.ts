@@ -11,12 +11,14 @@ import { AuthModule } from './auth/auth.module'
 import { CoreModule } from './core/core.module';
 import { EngineComponent } from './engine/engine.component';
 import { OrderComponent } from './orders/order/order.component';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EngineComponent,
     OrderComponent,
+    OrderHistoryComponent,
   ],
   imports: [
     BrowserModule,

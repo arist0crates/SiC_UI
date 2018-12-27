@@ -8,18 +8,20 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { OrderComponent } from './orders/order/order.component';
 import { AuthGuard } from './auth/auth-guard.service';
+import { OrderHistoryComponent } from './order-history/order-history.component';
 
 const appRoutes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'products', loadChildren: './products/products.module#ProductsModule'},
+  { path: 'products', loadChildren: './products/products.module#ProductsModule' },
   { path: 'shopping-list', component: ShoppingListComponent, canActivate: [AuthGuard] },
   { path: 'engine', component: EngineComponent },
-  { path: 'order', component: OrderComponent }
+  { path: 'order', component: OrderComponent },
+  { path: 'order-history', component: OrderHistoryComponent }
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes, {preloadingStrategy: PreloadAllModules}),
+    RouterModule.forRoot(appRoutes, { preloadingStrategy: PreloadAllModules }),
     ToastrModule.forRoot(),
     BrowserAnimationsModule
   ],
