@@ -28,7 +28,7 @@
             #longitude="ngModel">
         </div>
         <p *ngIf="!orderForm.valid && orderForm.touched">The form is invalid!</p>
-        <button (click)="onOrder()">Make Order</button>
+        <button type="button" class="btn btn-success" (click)="onOrder()">Make Order</button>
       </form>
     </div>
   </div>
