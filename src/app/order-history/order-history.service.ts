@@ -16,15 +16,15 @@ export class OrderHistoryService {
   private url = 'http://localhost:8080/orders/orderHistory/'
   constructor(private http: HttpClient) { }
 
-  getOrders(id:number): Observable<Order[]> {
+  getOrders(id:string): Observable<Order[]> {
     return this.http.get<Order[]>(this.url + id);
   }
 
-  getOrdersbyDate(id:number,data_init:string,data_end:string){
+  getOrdersbyDate(id:string,data_init:string,data_end:string){
     return this.http.get<Order[]>(this.url + id + "/" + data_init + "/" + data_end);
   }
 
-  getOrderbyState(id:number,state:string){
+  getOrderbyState(id:string,state:string){
     return this.http.get<Order[]>(this.url + id + "/" + state);
   }
 
