@@ -4,9 +4,12 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 
 import { ProductService } from '../product.service';
 import { Product } from '../product.model';
+import { ProductDTO } from '../product.model';
 import { MaterialFinish } from 'src/app/materialfinishes/materialfinish.model';
 import { Category } from 'src/app/categories/category.model';
-
+import { Dimension } from 'src/app/dimensions/dimension.model';
+import { DimensionDTO } from 'src/app/dimensions/dimension.model';
+import { ProductRelation } from '../product-relation.model';
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -14,10 +17,16 @@ import { Category } from 'src/app/categories/category.model';
 })
 export class ProductEditComponent implements OnInit {
   id: number;
-  editMode = false;
   productForm: FormGroup;
-  product: Product;
+
   lcategory: Category[];
+  selectedCategory: Category;
+  lmaterialFinishes: Array<MaterialFinish> = [];
+  possibleMaterialFinishes: MaterialFinish[];
+  lproducts: Product[];
+  lsubProducts: Product[] = [];
+  newProduct: ProductDTO;
+
 
   constructor(private route: ActivatedRoute,
     private productService: ProductService,
@@ -29,40 +38,120 @@ export class ProductEditComponent implements OnInit {
       .subscribe(
         (params: Params) => {
           this.id = +params['id'];
-          this.editMode = params['id'] != null;
           this.initForm();
         }
       );
-      this.getCategories();
+
+    this.getCategories();
+    this.getMaterialFinish();
+    this.getProducts();
   }
+
 
   onSubmit() {
-    const newProduct = new Product(
-      this.productForm.value['productId'],
-      this.productForm.value['name'],
-      this.productForm.value['possibleMaterialFinishes'],
-      this.productForm.value['products'],
-      this.productForm.value['dimensions'],
-      this.productForm.value['category']);
-    if (this.editMode) {
-      this.productService.updateProduct(this.id, this.productForm.value);
-    } else {
-      this.productService.addProduct(this.productForm.value);
+
+    const dimensions = new DimensionDTO(this.productForm.value['productDimensionminHeight'],
+      this.productForm.value['productDimensionmaxHeight'],
+      this.productForm.value['productDimensionminDepth'],
+      this.productForm.value['productDimensionmaxDepth'],
+      this.productForm.value['productDimensionminWidth'],
+      this.productForm.value['productDimensionmaxWidth']);
+
+    var productRelationsaux: ProductRelation[] = [];
+
+    for (let subproduct of this.lsubProducts) {
+      var subproductrelation = new ProductRelation(subproduct.productId);
+      productRelationsaux.push(subproductrelation);
     }
-    this.onCancel();
-  }
 
-  onAddProduct() {
-    (<FormArray>this.productForm.get('products')).push(
-      new FormGroup({
-        'name': new FormControl(null, Validators.required)
-
-      })
+    this.newProduct = new ProductDTO(
+      this.productForm.value['name'],
+      this.lmaterialFinishes,
+      productRelationsaux,
+      dimensions,
+      this.selectedCategory
     );
+
+    this.productService.postProduct(this.newProduct);
+    this.router.navigate(['../'], { relativeTo: this.route });
+
   }
 
-  onDeleteProduct(index: number) {
-    (<FormArray>this.productForm.get('products')).removeAt(index);
+  private initForm() {
+    let productId: number;
+    let productName: string;
+    let categoryChild: string;
+    let categoryFather: string;
+    let productPossibleMaterialFinishes: MaterialFinish[];
+    let productDimensionminHeight: number;
+    let productDimensionmaxHeight: number;
+    let productDimensionminDepth: number;
+    let productDimensionmaxDepth: number;
+    let productDimensionminWidth: number;
+    let productDimensionmaxWidth: number;
+    let productCategory: Category;
+    let materialFinish: String
+
+    this.productForm = new FormGroup({
+      'name': new FormControl(productName, Validators.required),
+      'categoryFather': new FormControl(categoryFather, Validators.required),
+
+      'productDimensionminHeight': new FormControl(productDimensionminHeight, Validators.required),
+      'productDimensionmaxHeight': new FormControl(productDimensionmaxHeight, Validators.required),
+      'productDimensionminDepth': new FormControl(productDimensionminDepth, Validators.required),
+      'productDimensionmaxDepth': new FormControl(productDimensionmaxDepth, Validators.required),
+      'productDimensionminWidth': new FormControl(productDimensionminWidth, Validators.required),
+      'productDimensionmaxWidth': new FormControl(productDimensionmaxWidth, Validators.required),
+      'materialFinish': new FormControl(materialFinish, Validators.required),
+
+    });
+
+  }
+
+  getProducts() {
+    this.productService.getProducts()
+      .then((lproducts) => {
+        this.lproducts = lproducts;
+        console.log(this.lproducts);
+      });
+  }
+
+  getCategories() {
+    this.productService.getCategory()
+      .then((lcategory) => {
+        this.lcategory = lcategory;
+        console.log(this.lcategory);
+      });
+  }
+
+  getMaterialFinish() {
+    this.productService.getMaterialFinish()
+      .then((possibleMaterialFinishes) => {
+        this.possibleMaterialFinishes = possibleMaterialFinishes;
+        console.log(this.possibleMaterialFinishes);
+      });
+  }
+
+  onDeleteSubProduct(index: number) {
+    this.lsubProducts.splice(index, 1);
+  }
+
+  onAddSubProduct(index: number) {
+    var subProduct = this.lproducts[index];
+    this.lsubProducts.push(subProduct);
+  }
+
+  onDeletePossibleMaterialFinish(index: number) {
+    this.lmaterialFinishes.splice(index, 1);
+  }
+
+  onAddPossibleMaterialFinish(index: number) {
+    var materialFinishN = this.possibleMaterialFinishes[index];
+    this.lmaterialFinishes.push(materialFinishN);
+  }
+
+  onSelectCategory(index: number) {
+    this.selectedCategory = this.lcategory[index];
   }
 
   onCancel() {
@@ -74,70 +163,12 @@ export class ProductEditComponent implements OnInit {
       (<FormArray>this.productForm.get('possibleMaterialFinishes')).controls;
   }
 
-  private initForm() {
-    let productId: number;
-    let productName: string;
-    let productProducts: Product[];
-    let productPossibleMaterialFinishes: MaterialFinish[];
-    let productDimensionminHeight: number;
-    let productDimensionmaxHeight: number;
-    let productDimensionminDepth: number;
-    let productDimensionmaxDepth: number;
-    let productDimensionminWidth: number;
-    let productDimensionmaxWidth: number;
-    let productCategory: Category;
+  onAddProduct() {
+    (<FormArray>this.productForm.get('products')).push(
+      new FormGroup({
+        'name': new FormControl(null, Validators.required)
 
-    if (this.editMode) {
-      this.productService.getProduct(this.id)
-        .then((product) => {
-          this.product = product;
-          console.log(this.product);
-        });
-      productName = this.product.name;
-      productId = this.product.productId;
-      productDimensionminHeight = this.product.dimensions.minHeight;
-      productDimensionmaxHeight = this.product.dimensions.maxHeight;
-      productDimensionminDepth = this.product.dimensions.minDepth;
-      productDimensionmaxDepth = this.product.dimensions.maxDepth;
-      productDimensionminWidth = this.product.dimensions.minWidth;
-      productDimensionmaxWidth = this.product.dimensions.maxWidth;
-      productCategory
-
-      if (this.product['products']) {
-        for (let product of this.product.products) {
-          productProducts.push(product);
-        }
-      }
-
-      if (this.product['possibleMaterialFinishes']) {
-        for (let materialFinish of this.product.possibleMaterialFinishes) {
-          productPossibleMaterialFinishes.push(materialFinish);
-        }
-      }
-    }
-
-    this.productForm = new FormGroup({
-      'productId': new FormControl(productId, Validators.required),
-      'name': new FormControl(productName, Validators.required),
-      'productPossibleMaterialFinishes': new FormControl(productPossibleMaterialFinishes, Validators.required),
-      'products': new FormControl(productProducts, Validators.required),
-      'productDimensionminHeight': new FormControl(productDimensionminHeight, Validators.required),
-      'productDimensionmaxHeight': new FormControl(productDimensionmaxHeight, Validators.required),
-      'productDimensionminDepth': new FormControl(productDimensionminDepth, Validators.required),
-      'productDimensionmaxDepth': new FormControl(productDimensionmaxDepth, Validators.required),
-      'productDimensionminWidth': new FormControl(productDimensionminWidth, Validators.required),
-      'productDimensionmaxWidth': new FormControl(productDimensionmaxWidth, Validators.required),
-      'productCategory': new FormControl(productCategory, Validators.required),
-
-    });
+      })
+    );
   }
-
-  getCategories(){
-    this.productService.getCategory()
-      .then((lcategory) => {
-        this.lcategory = lcategory;
-        console.log(this.lcategory);
-      });
-  }
-
 }

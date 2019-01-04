@@ -6,6 +6,7 @@ import { ProductService } from '../product.service';
 import { HttpParams } from '@angular/common/http';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Subscription } from 'rxjs';
+import { ProductPrice } from 'src/app/prices/productprice.model';
 
 @Component({
   selector: 'app-product-detail',
@@ -16,6 +17,7 @@ export class ProductDetailComponent implements OnInit {
   product: Product;
   subproducts: Product[];
   id: number;
+  price: ProductPrice;
 
   constructor(private productService: ProductService,
     private route: ActivatedRoute,
@@ -37,12 +39,17 @@ export class ProductDetailComponent implements OnInit {
           this.productService.getProduct(this.id)
             .then((product) => {
               this.product = product;
-              this.subproducts = product.products;
+              this.subproducts = product.products;              
               console.log(this.subproducts);
               console.log(this.product);
             });
-        })
-
+          this.productService.getProductPrice(this.id)
+          .then((price) => {
+            this.price = price;
+            //console.log(this.price.value);
+          })
+        });
+    
   }
 
   onAddToShoppingList() {
@@ -52,6 +59,11 @@ export class ProductDetailComponent implements OnInit {
   onEditProduct() {
     this.router.navigate(['edit'], {relativeTo: this.route});
     this.router.navigate(['../', this.id, 'edit'], {relativeTo: this.route});
+  }
+
+  onEditProductPrice(){
+    this.router.navigate(['price'], {relativeTo: this.route});
+
   }
 
   onDeleteProduct() {

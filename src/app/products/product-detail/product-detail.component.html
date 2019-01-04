@@ -50,6 +50,12 @@
       </div>
     </div>
     <div class="row">
+        <div class="col-sm-5 form-group">
+          <label for="product">Product Price:</label>
+          {{price.value}}
+        </div>
+      </div>
+    <div class="row">
       <div class="col-xs-12">
         <div class="row">
           <div class="col-sm-5 form-group">
@@ -70,6 +76,25 @@
     </div>
     <div class="row">
       <div class="col-xs-12">
+        <div class="row">
+          <div class="col-sm-5 form-group">
+            <label for="product">Category</label>
+            <table class="table">
+              <tr>
+                <th>#</th>
+                <th>Category</th>
+              </tr>
+              <tr>
+                <td>{{product.category.CategoryId}}</td>
+                <td>{{product.category.name}}</td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12">
         <div class="btn-group" appDropdown>
           <button type="button" class="btn btn-primary dropdown-toggle">
             Manage Product <span class="caret"></span>
@@ -77,6 +102,7 @@
           <ul class="dropdown-menu">
             <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">To Shopping List</a></li>
             <li><a (click)="onAddToShoppingList()" style="cursor: pointer;">Edit Product</a></li>
+            <li><a (click)="onEditProductPrice()" style="cursor: pointer;">Edit Product Price</a></li>
           </ul>
         </div>
       </div>
